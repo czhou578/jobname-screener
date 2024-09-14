@@ -1,11 +1,11 @@
 // Listen for messages from the popup script
 
-let existingCompanies = null
-
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    let existingCompanies = null
+
     if (request.action === "setData") {
         existingCompanies = request.data
-        console.log(existingCompanies); // Output: "myValue"
+        localStorage.setItem('companies', JSON.stringify(existingCompanies.companies))
     }
 
     const currentUrl = window.location.href.toLowerCase();
@@ -14,26 +14,67 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // Check if the URL contains "linkedin" or "indeed"
     if (currentUrl.includes("linkedin.com/jobs/")) {
     
-    // Send a message to the popup script to get the data
-    
-        //grab all comopany names from current page and store in array
-        //grab company names from local storage
-        //compare from both lists and find duplicates. If find match, change header color to orange
         let listedNameElements = document.querySelectorAll('.job-card-container__primary-description')
-        console.log('listed elements, ', listedNameElements)
 
         for (let companyName of listedNameElements) {
             if (existingCompanies !== null && existingCompanies.companies.includes(companyName.innerText)) {
-                console.log('company, ', companyName)
                 companyName.style.color = 'orange'
             }
         }
           
       console.log("This page is LinkedIn related.");
-    } else if (currentUrl.includes("indeed")) {
+    } else if (currentUrl.includes("indeed.com/jobs")) {
+        const elements = document.querySelectorAll('[data-testid="company-name"]');
+
+        for (let companyName of elements) {
+            if (existingCompanies !== null && existingCompanies.companies.includes(companyName.innerText)) {
+                companyName.style.color = 'orange'
+            }
+        }
+
       console.log("This page is Indeed related.");
     } else {
       console.log("This page is not LinkedIn or Indeed related.");
     }
   });
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+if (request.action === "runContentScript") {
+    if (localStorage.getItem('companies') !== null) {
+        let existingCompanies = JSON.parse(localStorage.getItem('companies'))
+
+        const currentUrl = window.location.href.toLowerCase();
+        
+        if (currentUrl.includes("linkedin.com/jobs/")) {
+        
+            let listedNameElements = document.querySelectorAll('.job-card-container__primary-description')
+    
+            for (let companyName of listedNameElements) {
+                if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
+                    companyName.style.color = 'orange'
+                }
+            }
+                
+            console.log("This page is LinkedIn related.");
+        } else if (currentUrl.includes("indeed")) {
+
+            const elements = document.querySelectorAll('[data-testid="company-name"]');
+
+            for (let companyName of elements) {
+                if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
+                    companyName.style.color = 'orange'
+                }
+            }
+
+        } else {
+            console.log("This page is not LinkedIn or Indeed related.");
+        }
+        console.log('Key exists');
+    } else {
+        console.log('Key does not exist');
+    }
+}
+});
+
+
 
