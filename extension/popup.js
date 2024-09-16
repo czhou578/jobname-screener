@@ -3,9 +3,16 @@ document.addEventListener("DOMContentLoaded", function () {
   
     button.addEventListener("click", async function () {
       // Send a message to the background script
+        button.style.backgroundColor = 'orange';
+        button.style.value = 'Fetching...'
+
         try {
-            console.log('hello')
             await fetchColumnA()
+            button.style.value = 'Fetched!'
+            button.style.backgroundColor = ''
+            setTimeout(() => {
+                button.style.value = 'Fetch Data'
+            }, 1000);
         } catch (error) {
             console.log(error)
         }
@@ -13,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 async function fetchColumnA() {
-    console.log('inside function')
     const API_KEY = 'AIzaSyDoxZ603PjBf9o6qCqtzQG8wr-3WmBEv04';  // Replace with your Google API Key
     const SPREADSHEET_ID = '1fc0h0DPjSsbHR__qecMSrF2IW9AUhPPDh00jDWEOoy0';  // Replace with your Spreadsheet ID
     const range = 'A:A';  // Define the range for column A

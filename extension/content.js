@@ -33,8 +33,18 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }
 
       console.log("This page is Indeed related.");
+    } else if (currentUrl.includes("levels.fyi/jobs")) {
+
+        const elements = document.querySelectorAll('.company-jobs-preview-card_companyName__cQKav')
+
+        for (let companyName of elements) {
+            if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
+                companyName.style.color = 'orange'
+            }
+        }        
+
     } else {
-      console.log("This page is not LinkedIn or Indeed related.");
+        console.log("This page is not LinkedIn or Indeed related.");
     }
   });
 
@@ -66,10 +76,20 @@ if (request.action === "runContentScript") {
                 }
             }
 
-        } else {
-            console.log("This page is not LinkedIn or Indeed related.");
+        } else if (currentUrl.includes("levels.fyi")) {
+            const elements = document.querySelectorAll('.company-jobs-preview-card_companyName__cQKav')
+
+            for (let companyName of elements) {
+                if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
+                    companyName.style.color = 'orange'
+                }
+            }
+
+        } else if (currentUrl.includes("simplify.jobs")) {
+
         }
         console.log('Key exists');
+
     } else {
         console.log('Key does not exist');
     }
