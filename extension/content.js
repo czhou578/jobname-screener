@@ -4,8 +4,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     let existingCompanies = null
 
     if (request.action === "setData") {
-        existingCompanies = request.data
-        localStorage.setItem('companies', JSON.stringify(existingCompanies.companies))
+        existingCompanies = request.data.companies
+        console.log('data received, ', existingCompanies)
+        localStorage.setItem('companies', JSON.stringify(existingCompanies))
+        console.log('content script has set local storage')
     }
 
     const currentUrl = window.location.href.toLowerCase();
@@ -17,7 +19,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         let listedNameElements = document.querySelectorAll('.job-card-container__primary-description')
 
         for (let companyName of listedNameElements) {
-            if (existingCompanies !== null && existingCompanies.companies.includes(companyName.innerText)) {
+            if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
                 companyName.style.color = 'orange'
             }
         }
@@ -27,7 +29,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         const elements = document.querySelectorAll('[data-testid="company-name"]');
 
         for (let companyName of elements) {
-            if (existingCompanies !== null && existingCompanies.companies.includes(companyName.innerText)) {
+            if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
                 companyName.style.color = 'orange'
             }
         }
@@ -50,6 +52,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 if (request.action === "runContentScript") {
+    console.log('runContentScript has been received')
+
     if (localStorage.getItem('companies') !== null) {
         let existingCompanies = JSON.parse(localStorage.getItem('companies'))
 
