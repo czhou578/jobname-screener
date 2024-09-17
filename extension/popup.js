@@ -1,7 +1,5 @@
-require('dotenv').config();
-
-const API_KEY = process.env.API_KEY;  // Replace with your Google API Key
-const SPREADSHEET_ID = process.env.SPREADSHEET_ID  // Replace with your Spreadsheet ID
+const API_KEY = "AIzaSyDoxZ603PjBf9o6qCqtzQG8wr-3WmBEv04";  // Replace with your Google API Key
+const SPREADSHEET_ID = "1fc0h0DPjSsbHR__qecMSrF2IW9AUhPPDh00jDWEOoy0"  // Replace with your Spreadsheet ID
 const range = 'A:A';  // Define the range for column A
 const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
 
