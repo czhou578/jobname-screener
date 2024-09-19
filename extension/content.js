@@ -45,7 +45,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }
         }        
 
-    } else {
+    } else if (currentUrl.includes("workatastartup.com/companies")) {
+        const elements = document.querySelectorAll('.company-name')
+
+        for (let companyName of elements) {
+            if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
+                companyName.style.color = 'orange'
+            }
+        }          
+
         console.log("This page is not LinkedIn or Indeed related.");
     }
   });

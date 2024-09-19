@@ -13,7 +13,8 @@
         {
             "matches": [
                 "*://*.linkedin.com/*",
-                "*://*.indeed.com/*"
+                "*://*.indeed.com/*",
+                "*://*.workatastartup.com/*"
             ],
             "js": [
                 "content.js"
