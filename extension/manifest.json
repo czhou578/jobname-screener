@@ -14,7 +14,8 @@
             "matches": [
                 "*://*.linkedin.com/*",
                 "*://*.indeed.com/*",
-                "*://*.workatastartup.com/*"
+                "*://*.workatastartup.com/*",
+                "*://*.wellfound.com/*"
             ],
             "js": [
                 "content.js"

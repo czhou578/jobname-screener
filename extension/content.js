@@ -45,7 +45,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }
         }        
 
-    } else if (currentUrl.includes("workatastartup.com/companies")) {
+    } else if (currentUrl.includes("workatastartup.com/companies")) { //ycombinator jobs website
         const elements = document.querySelectorAll('.company-name')
 
         for (let companyName of elements) {
@@ -55,6 +55,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }          
 
         console.log("This page is not LinkedIn or Indeed related.");
+    
+    } else if (currentUrl.includes("wellfound.com/jobs")) {
+        const elements = document.getElementsByTagName('h2')
+        for (let companyName of elements) {
+            if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
+                companyName.style.color = 'orange'
+            }
+        } 
     }
   });
 
