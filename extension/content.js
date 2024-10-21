@@ -64,7 +64,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }
         } 
     } else if (currentUrl.includes("ziprecruiter.com/jobs")) {
-        const elements = document.getElementsByClassName('break-words')
+        const elements = document.querySelectorAll('[data-testid="job-card-company"]');
         for (let companyName of elements) {
             if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
                 companyName.style.color = 'orange'
@@ -113,7 +113,7 @@ if (request.action === "runContentScript") {
             }
 
         } else if (currentUrl.includes("ziprecruiter")) {
-            const elements = document.getElementsByClassName('break-words')
+            const elements = document.querySelectorAll('[data-testid="job-card-company"]');
             for (let companyName of elements) {
                 if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
                     companyName.style.color = 'orange'
