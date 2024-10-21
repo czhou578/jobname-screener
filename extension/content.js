@@ -63,6 +63,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 companyName.style.color = 'orange'
             }
         } 
+    } else if (currentUrl.includes("ziprecruiter.com/jobs")) {
+        const elements = document.getElementsByClassName('break-words')
+        for (let companyName of elements) {
+            if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
+                companyName.style.color = 'orange'
+            }
+        }         
     }
   });
 
@@ -105,8 +112,13 @@ if (request.action === "runContentScript") {
                 }
             }
 
-        } else if (currentUrl.includes("simplify.jobs")) {
-
+        } else if (currentUrl.includes("ziprecruiter")) {
+            const elements = document.getElementsByClassName('break-words')
+            for (let companyName of elements) {
+                if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
+                    companyName.style.color = 'orange'
+                }
+            }             
         }
         console.log('Key exists');
 
