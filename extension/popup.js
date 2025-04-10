@@ -1,5 +1,5 @@
 const API_KEY = "AIzaSyDoxZ603PjBf9o6qCqtzQG8wr-3WmBEv04";  // Replace with your Google API Key
-const SPREADSHEET_ID = "1fc0h0DPjSsbHR__qecMSrF2IW9AUhPPDh00jDWEOoy0"  // Replace with your Spreadsheet ID
+const SPREADSHEET_ID = "1JmoGQdrraNMbxY7mYhNatBlKm3Z_xoN_zm8fE8XGxW4"  // Replace with your Spreadsheet ID
 const range = 'A:A';  // Define the range for column A
 const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
 
@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             
             const data = await response.json();
+            console.log(data);
             const columnAData = data.values || [];
             let result = columnAData.flat()
 
