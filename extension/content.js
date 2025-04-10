@@ -1,31 +1,29 @@
 
-// Select the job list container
-// const jobListContainer = document.querySelector(".TLMROFEMTCRfHzVUhGINJATfqcfxkbxZYELI");
+let existingCompanies = JSON.parse(localStorage.getItem('companies')) || [];
 
-// if (jobListContainer) {
-//   // Create a MutationObserver to monitor changes in the job list
-//   const observer = new MutationObserver((mutationsList) => {
-//     for (const mutation of mutationsList) {
-//       if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-//         console.log("New jobs detected!");
-        
-//         // Process the new job postings
-//         mutation.addedNodes.forEach((node) => {
-//           if (node.nodeType === 1) {
-//             console.log("New job element:", node);
-//           }
-//         });
-//       }
-//     }
-//   });
+const jobListContainer = document.body; // Use the body or a specific container to observe changes
 
-//   // Start observing the job list container for added nodes (new jobs)
-//   observer.observe(jobListContainer, { childList: true, subtree: true });
+if (jobListContainer) {
+    // Create a MutationObserver to monitor changes in the DOM
+    const observer = new MutationObserver(() => {
+        const listedNameElements = document.querySelectorAll('[dir="ltr"]');
+        console.log('Current number of elements:', listedNameElements.length);
 
-//   console.log("Observer started for LinkedIn jobs.");
-// } else {
-//   console.error("Job list container not found.");
-// }
+        // Iterate over the elements and check if they match existingCompanies
+        for (let companyName of listedNameElements) {
+            if (existingCompanies.includes(companyName.innerText)) {
+                companyName.style.color = 'orange'; // Highlight the company name
+            }
+        }
+    });
+
+    // Start observing the container for changes in child nodes
+    observer.observe(jobListContainer, { childList: true, subtree: true });
+
+    console.log("Observer started to monitor changes in the job list.");
+} else {
+    console.error("Job list container not found.");
+}
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     let existingCompanies = null
