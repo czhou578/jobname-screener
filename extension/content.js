@@ -95,7 +95,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
                 companyName.style.color = 'orange'
             }
-        }         
+        }        
+    } else if (currentUrl.includes("simplify.jobs")) {
+        const companyNames = document.querySelectorAll("span.text-left")
+        for (let companyName of companyNames) {
+            if (existingCompanies !== null && existingCompanies.includes(companyName.innerText)) {
+                companyName.style.color = 'orange'
+            }
+        }
     }
   });
 
